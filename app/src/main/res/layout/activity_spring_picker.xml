@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/trans_black_80"
+    android:orientation="horizontal">
+
+    <org.dreamzone.funnyroidui.springpicker.SpringPickerView
+        android:id="@+id/sp_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        app:maxWidth="250dp"
+        app:minWidth="80dp"
+        app:pickerWidth="25dp"
+        app:pickerGap="17dp"
+       />
+
+    <ImageView
+        android:id="@+id/iv_img_one"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/img_ad_failed"/>
+
+    <ImageView
+        android:id="@+id/iv_img_two"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/img_welcome"/>
+</LinearLayout>

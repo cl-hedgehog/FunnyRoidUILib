@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/trans_black_80"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/iv_img"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/img_ad_failed"
+        android:visibility="visible"/>
+
+    <org.dreamzone.funnyroidui.BeautyDiffuseView.BeautyDiffuseView
+        android:id="@+id/view_diffuse"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"/>
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="start"/>
+</RelativeLayout>

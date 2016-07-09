@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rl_root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/trans_black_80"
+    android:paddingLeft="22dp"
+    android:paddingRight="4dp"
+    >
+
+    <org.dreamzone.funnyroidui.springpicker.RoundProgressBar
+        android:id="@+id/pb_level"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="3dp"
+        android:visibility="gone"
+        app:circleSize="40dp"
+        app:max="30"
+        app:roundColor="@color/spring_picker_bkg_normal"
+        app:roundProgressColor="@color/spring_picker_bkg_select"
+        app:roundProgressWidth="4dp"
+        app:roundWidth="2dp"
+        app:textSize="18dp"
+        />
+
+    <ImageView
+        android:id="@+id/iv_cover"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_cover_spring_picker"
+        />
+
+    <Button
+        android:id="@+id/btn_level_zero"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/pb_level"
+        android:background="@drawable/selector_txt_bkg_spring_picker"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/selector_txt_color_spring_picker"
+        android:textSize="14sp"/>
+
+    <Button
+        android:id="@+id/btn_level_one"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/pb_level"
+        android:background="@drawable/selector_txt_bkg_spring_picker"
+        android:text="1"
+        android:textColor="@color/selector_txt_color_spring_picker"
+        android:textSize="14sp"/>
+
+    <Button
+        android:id="@+id/btn_level_two"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/pb_level"
+        android:background="@drawable/selector_txt_bkg_spring_picker"
+        android:text="2"
+        android:textColor="@color/selector_txt_color_spring_picker"
+        android:textSize="14sp"/>
+
+    <Button
+        android:id="@+id/btn_level_three"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/pb_level"
+        android:background="@drawable/selector_txt_bkg_spring_picker"
+        android:text="3"
+        android:textColor="@color/selector_txt_color_spring_picker"
+        android:textSize="14sp"/>
+
+</RelativeLayout>
