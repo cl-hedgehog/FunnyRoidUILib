@@ -49,6 +49,7 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
 
     private int collapseWidth;
     private int expandWidth;
+    private boolean showProgressCollapsed = false; // 是否收起时显示进度数字，默认显示Cover
 
     public SpringPickerView(Context context) {
         this(context, null);
@@ -138,15 +139,23 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
         for (int i = 0; i < itemCount; i++) {
             mItemViews[i].setVisibility(VISIBLE);
             pbPicker.setVisibility(View.VISIBLE);
-            ivCover.setVisibility(View.GONE);
+            if(ivCover.getVisibility() != View.GONE){
+                ivCover.setVisibility(View.GONE);
+            }
         }
     }
 
     private void setPickerGone() {
         for (int i = 0; i < itemCount; i++) {
             mItemViews[i].setVisibility(GONE);
-            pbPicker.setVisibility(View.GONE);
-            ivCover.setVisibility(View.VISIBLE);
+            if(showProgressCollapsed){
+                pbPicker.setVisibility(View.VISIBLE);
+                ivCover.setVisibility(View.GONE);
+            }else{
+                pbPicker.setVisibility(View.GONE);
+                ivCover.setVisibility(View.VISIBLE);
+            }
+
         }
     }
 
@@ -211,6 +220,14 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
             mIsScaled[i] = false;
         }
         mIsScaled[mCurrentProcess] = true;
+    }
+
+    /**
+     * 是否收起时显示进度数字，设为true则显示进度数字，默认false显示Cover
+     * @param bShowProgressCollapsed
+     */
+    public void setShowProgressWhenCollapsed(boolean bShowProgressCollapsed) {
+        this.showProgressCollapsed = bShowProgressCollapsed;
     }
 
     /**
