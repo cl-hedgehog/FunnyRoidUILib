@@ -1,5 +1,7 @@
 package org.dreamzone.funnyroidui.springpicker;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -21,8 +23,11 @@ import org.dreamzone.funnyroidui.R;
  * @ClassName: SpringPickerView
  * @Description:
  * @date 2016/7/6 13:38
+ * @version update 2016/7/13 检查动画是否结束，结束后再改变收起展开状态
+ *
  */
 public class SpringPickerView extends RelativeLayout implements View.OnClickListener {
+    private final  String TAG = SpringPickerView.class.getSimpleName();
 
     private Context mContext;
 
@@ -40,6 +45,8 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
 
     private OnLevelPickedListener mOnLevelPickedListener;
 
+    private OnPickerClickListener mOnPickerClickListener;
+
     private final int PICKER_ANIMATION_DURATION = 200;
     private final int RECOVER_STEP = 10;// max is 30
 
@@ -49,7 +56,8 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
 
     private int collapseWidth;
     private int expandWidth;
-    private boolean showProgressCollapsed = false; // 是否收起时显示进度数字，默认显示Cover
+
+    private boolean isAnimation = false;
 
     public SpringPickerView(Context context) {
         this(context, null);
@@ -103,26 +111,38 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
 
             @Override
             public void onClick(View v) {
+                if(isAnimation){
+                    return;
+                }
                 PickerStatus status;
                 if (mCurrentState == PickerStatus.COLLAPSED) {
                     status = PickerStatus.EXPANDED;
                 } else {
                     status = PickerStatus.COLLAPSED;
                 }
-                updatePickerStatus(status);
+                if (mOnPickerClickListener != null) {
+                    mOnPickerClickListener.onPickerClick(status);
+                }
+//                                updatePickerStatus(status);
             }
         });
         ivCover.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                if(isAnimation){
+                    return;
+                }
                 PickerStatus status;
                 if (mCurrentState == PickerStatus.COLLAPSED) {
                     status = PickerStatus.EXPANDED;
                 } else {
                     status = PickerStatus.COLLAPSED;
                 }
-                updatePickerStatus(status);
+                if (mOnPickerClickListener != null) {
+                    mOnPickerClickListener.onPickerClick(status);
+                }
+//                                updatePickerStatus(status);
             }
         });
         for (int i = 0; i < itemCount; i++) {
@@ -135,11 +155,24 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
         updateProgressStatus();
     }
 
+    public PickerStatus getCurrentStatus(){
+        return mCurrentState;
+    }
+
+    public void setShowCover(boolean showCover) {
+        if (ivCover != null) {
+            ivCover.setVisibility(showCover ? View.VISIBLE : View.GONE);
+        }
+        if (pbPicker != null) {
+            pbPicker.setVisibility(showCover ? View.GONE : View.VISIBLE);
+        }
+    }
+
     private void setPickerVisible() {
         for (int i = 0; i < itemCount; i++) {
             mItemViews[i].setVisibility(VISIBLE);
             pbPicker.setVisibility(View.VISIBLE);
-            if(ivCover.getVisibility() != View.GONE){
+            if (ivCover.getVisibility() != View.GONE) {
                 ivCover.setVisibility(View.GONE);
             }
         }
@@ -148,14 +181,6 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
     private void setPickerGone() {
         for (int i = 0; i < itemCount; i++) {
             mItemViews[i].setVisibility(GONE);
-            if(showProgressCollapsed){
-                pbPicker.setVisibility(View.VISIBLE);
-                ivCover.setVisibility(View.GONE);
-            }else{
-                pbPicker.setVisibility(View.GONE);
-                ivCover.setVisibility(View.VISIBLE);
-            }
-
         }
     }
 
@@ -182,6 +207,10 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
 
     public void setOnLevelPickedListener(OnLevelPickedListener onLevelPickedListener) {
         mOnLevelPickedListener = onLevelPickedListener;
+    }
+
+    public void setOnPickerClickListener(OnPickerClickListener listener) {
+        mOnPickerClickListener = listener;
     }
 
     /**
@@ -216,18 +245,11 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
         if (mOnLevelPickedListener != null && isTriggerLevelChanged) {
             mOnLevelPickedListener.onLevelPicked(mCurrentLevel);
         }
+
         for (int i = 0; i < mIsScaled.length; i++) {
             mIsScaled[i] = false;
         }
         mIsScaled[mCurrentProcess] = true;
-    }
-
-    /**
-     * 是否收起时显示进度数字，设为true则显示进度数字，默认false显示Cover
-     * @param bShowProgressCollapsed
-     */
-    public void setShowProgressWhenCollapsed(boolean bShowProgressCollapsed) {
-        this.showProgressCollapsed = bShowProgressCollapsed;
     }
 
     /**
@@ -288,17 +310,27 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
      * 弹性展开
      */
     private void performCollapsedAnimation() {
+        isAnimation = true;
         AnimatorSet set = new AnimatorSet();
+        ObjectAnimator animatorLast = ObjectAnimator.ofFloat(mItemViews[3], "translationX", mTranslateOffset[3], 0.0f);
         set.playTogether(
                 ObjectAnimator.ofFloat(mItemViews[0], "translationX", mTranslateOffset[0], 0.0f),
                 ObjectAnimator.ofFloat(mItemViews[1], "translationX", mTranslateOffset[1], 0.0f),
                 ObjectAnimator.ofFloat(mItemViews[2], "translationX", mTranslateOffset[2], 0.0f),
-                ObjectAnimator.ofFloat(mItemViews[3], "translationX", mTranslateOffset[3], 0.0f)
+                animatorLast
         );
         set.setDuration(PICKER_ANIMATION_DURATION).start();
         LayoutParams layoutParams = (LayoutParams) rlRoot.getLayoutParams();
         layoutParams.width = collapseWidth;
         rlRoot.setLayoutParams(layoutParams);
+
+        animatorLast.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                isAnimation = false;
+            }
+        });
     }
 
 
@@ -306,8 +338,10 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
      * 弹性收起
      */
     private void performExpandAnimation() {
+        isAnimation = true;
         AnimatorSet set = new AnimatorSet();
         ObjectAnimator animator = ObjectAnimator.ofFloat(mItemViews[0], "translationX", 0.0f, mTranslateOffset[0]);
+        ObjectAnimator animatorLast = ObjectAnimator.ofFloat(mItemViews[3], "alpha", 0.0f, 1.0f);
         set.playTogether(
                 animator,
                 ObjectAnimator.ofFloat(mItemViews[0], "alpha", 0.0f, 1.0f),
@@ -316,7 +350,7 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
                 ObjectAnimator.ofFloat(mItemViews[2], "translationX", 0.0f, mTranslateOffset[2]),
                 ObjectAnimator.ofFloat(mItemViews[2], "alpha", 0.0f, 1.0f),
                 ObjectAnimator.ofFloat(mItemViews[3], "translationX", 0.0f, mTranslateOffset[3]),
-                ObjectAnimator.ofFloat(mItemViews[3], "alpha", 0.0f, 1.0f)
+                animatorLast
 
         );
         set.setDuration(PICKER_ANIMATION_DURATION).start();
@@ -329,6 +363,13 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
                 LayoutParams layoutParams = (LayoutParams) rlRoot.getLayoutParams();
                 layoutParams.width = Math.max((int) (expandWidth * percent), collapseWidth);
                 rlRoot.setLayoutParams(layoutParams);
+            }
+        });
+        animatorLast.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                isAnimation = false;
             }
         });
     }
@@ -429,13 +470,17 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
          *
          * @param pickerLevel
          */
-        public void onLevelPicked(PickerLevel pickerLevel);
+        void onLevelPicked(PickerLevel pickerLevel);
 
         /**
          * 级别选择器展开或者收起
          *
          * @param pickerStatus
          */
-        public void onPickerStatusChanged(PickerStatus pickerStatus);
+        void onPickerStatusChanged(PickerStatus pickerStatus);
+    }
+
+    public interface OnPickerClickListener {
+        void onPickerClick(PickerStatus status);
     }
 }
