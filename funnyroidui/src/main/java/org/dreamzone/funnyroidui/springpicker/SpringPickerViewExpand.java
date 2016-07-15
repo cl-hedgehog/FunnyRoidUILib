@@ -95,7 +95,7 @@ public class SpringPickerViewExpand extends RelativeLayout implements View.OnCli
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         // wrap_content时，收起时的ProgressBar也要占用collapseWidth的宽度
-        setMeasuredDimension(Math.max(getMeasuredWidth(), collapseWidth), getMeasuredHeight());
+        //setMeasuredDimension(Math.max(getMeasuredWidth(), collapseWidth), getMeasuredHeight());
     }
 
     private void initView() {
@@ -156,6 +156,9 @@ public class SpringPickerViewExpand extends RelativeLayout implements View.OnCli
             mTranslateOffset[i] = (pickerWidth + pickerGap) * (i + 1) - pickerWidth;
         }
         setPickerGone();
+        LayoutParams layoutParams = (LayoutParams) rlRoot.getLayoutParams();
+        layoutParams.width = collapseWidth;
+        rlRoot.setLayoutParams(layoutParams);
         // 更新各个level控件的样式
         updateLevelStatus();
         setPickerSelected(mCurrentProcess);

@@ -150,6 +150,9 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
             mIsScaled[i] = false;
             mTranslateOffset[i] = (pickerWidth + pickerGap) * (i + 1) - pickerWidth;
         }
+        LayoutParams layoutParams = (LayoutParams) rlRoot.getLayoutParams();
+        layoutParams.width = collapseWidth;
+        rlRoot.setLayoutParams(layoutParams);
         setPickerGone();
         setPickerSelected(mCurrentProcess);
         updateProgressStatus();

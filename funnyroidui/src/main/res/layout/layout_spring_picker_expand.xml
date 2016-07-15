@@ -16,7 +16,6 @@
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="3dp"
         android:visibility="gone"
         app:circleSize="40dp"
         app:max="30"

@@ -17,7 +17,7 @@
             android:id="@+id/sp_picker"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
-            app:maxWidth="250dp"
+            app:maxWidth="257dp"
             app:minWidth="80dp"
             app:pickerWidth="37dp"
             app:pickerGap="6dp"/>
