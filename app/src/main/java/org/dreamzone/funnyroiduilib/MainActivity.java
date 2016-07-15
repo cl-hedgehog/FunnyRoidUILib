@@ -62,6 +62,9 @@ public class MainActivity extends FragmentActivity {
             case 1:
                 BeautyDiffuseActivity.start(this);
                 break;
+            case 2:
+                SpringPickerViewExpandActivity.start(this);
+                break;
             default:
                 break;
         }

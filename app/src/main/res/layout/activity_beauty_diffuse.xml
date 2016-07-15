@@ -15,7 +15,7 @@
         android:src="@drawable/img_ad_failed"
         android:visibility="visible"/>
 
-    <org.dreamzone.funnyroidui.BeautyDiffuseView.BeautyDiffuseView
+    <org.dreamzone.funnyroidui.beautydiffuseview.BeautyDiffuseView
         android:id="@+id/view_diffuse"
         android:layout_width="match_parent"
         android:layout_height="400dp"/>

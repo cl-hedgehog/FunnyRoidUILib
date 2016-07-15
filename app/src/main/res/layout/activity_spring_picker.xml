@@ -15,7 +15,7 @@
         app:minWidth="80dp"
         app:pickerWidth="25dp"
         app:pickerGap="17dp"
-       />
+        />
 
     <ImageView
         android:id="@+id/iv_img_one"

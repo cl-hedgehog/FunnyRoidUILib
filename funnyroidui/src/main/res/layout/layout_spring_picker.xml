@@ -38,7 +38,7 @@
         />
 
     <Button
-        android:id="@+id/btn_level_zero"
+        android:id="@id/btn_level_zero"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_centerVertical="true"
@@ -50,7 +50,7 @@
         android:textSize="14sp"/>
 
     <Button
-        android:id="@+id/btn_level_one"
+        android:id="@id/btn_level_one"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_centerVertical="true"
@@ -61,7 +61,7 @@
         android:textSize="14sp"/>
 
     <Button
-        android:id="@+id/btn_level_two"
+        android:id="@id/btn_level_two"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_centerVertical="true"
@@ -72,7 +72,7 @@
         android:textSize="14sp"/>
 
     <Button
-        android:id="@+id/btn_level_three"
+        android:id="@id/btn_level_three"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_centerVertical="true"

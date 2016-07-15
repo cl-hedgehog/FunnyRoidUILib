@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rl_root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:paddingLeft="22dp"
+    android:paddingRight="4dp"
+    >
+
+    <org.dreamzone.funnyroidui.springpicker.RoundProgressBar
+        android:id="@+id/pb_level"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="3dp"
+        android:visibility="gone"
+        app:circleSize="40dp"
+        app:max="30"
+        app:roundColor="@color/spring_picker_bkg_normal"
+        app:roundProgressColor="@color/spring_picker_bkg_select"
+        app:roundProgressWidth="4dp"
+        app:roundWidth="2dp"
+        app:textSize="18dp"
+        />
+
+    <ImageView
+        android:id="@+id/iv_cover"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_cover_spring_picker"
+        />
+
+    <org.dreamzone.funnyroidui.springpicker.PickerView
+        android:id="@id/btn_level_zero"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/pb_level"
+        app:maxSize="37dp"
+        app:normalColor="@color/spring_picker_bkg_normal"
+        app:numberTextSize="14dp"
+        app:radiusMax="17dp"
+        app:radiusMin="13dp"
+        app:selectedColor="@color/spring_picker_bkg_select"
+        app:textNormalColor="@color/spring_picker_text_normal"
+        app:textSelectedColor="@color/spring_picker_text_select"
+        app:numberText="0"/>
+
+    <org.dreamzone.funnyroidui.springpicker.PickerView
+        android:id="@id/btn_level_one"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/pb_level"
+        app:maxSize="37dp"
+        app:normalColor="@color/spring_picker_bkg_normal"
+        app:numberText="2"
+        app:numberTextSize="14dp"
+        app:radiusMax="17dp"
+        app:radiusMin="13dp"
+        app:selectedColor="@color/spring_picker_bkg_select"
+        app:textNormalColor="@color/spring_picker_text_normal"
+        app:textSelectedColor="@color/spring_picker_text_select"/>
+
+    <org.dreamzone.funnyroidui.springpicker.PickerView
+        android:id="@id/btn_level_two"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/pb_level"
+        app:maxSize="37dp"
+        app:normalColor="@color/spring_picker_bkg_normal"
+        app:numberText="I"
+        app:numberTextSize="14dp"
+        app:radiusMax="17dp"
+        app:radiusMin="13dp"
+        app:selectedColor="@color/spring_picker_bkg_select"
+        app:textNormalColor="@color/spring_picker_text_normal"
+        app:textSelectedColor="@color/spring_picker_text_select"/>
+
+    <org.dreamzone.funnyroidui.springpicker.PickerView
+        android:id="@id/btn_level_three"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/pb_level"
+        app:maxSize="37dp"
+        app:normalColor="@color/spring_picker_bkg_normal"
+        app:numberText="1"
+        app:numberTextSize="14dp"
+        app:radiusMax="17dp"
+        app:radiusMin="13dp"
+        app:selectedColor="@color/spring_picker_bkg_select"
+        app:textNormalColor="@color/spring_picker_text_normal"
+        app:textSelectedColor="@color/spring_picker_text_select"/>
+
+</RelativeLayout>

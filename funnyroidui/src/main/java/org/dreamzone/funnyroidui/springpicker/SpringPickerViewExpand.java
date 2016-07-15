@@ -10,8 +10,6 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -20,21 +18,21 @@ import org.dreamzone.funnyroidui.R;
 
 /**
  * @author bohe
- * @ClassName: SpringPickerView
- * @Description:
+ * @ClassName: SpringPickerViewExpand
+ * @Description: 使用自定义PickerView，PickerView点击区域可控制
  * @date 2016/7/6 13:38
  * @version update 2016/7/13 检查动画是否结束，结束后再改变收起展开状态
  *
  */
-public class SpringPickerView extends RelativeLayout implements View.OnClickListener {
-    private final  String TAG = SpringPickerView.class.getSimpleName();
+public class SpringPickerViewExpand extends RelativeLayout implements View.OnClickListener {
+    private final  String TAG = SpringPickerViewExpand.class.getSimpleName();
 
     private Context mContext;
 
     private RelativeLayout rlRoot;
     private RoundProgressBar pbPicker;
     private ImageView ivCover;
-    private Button[] mItemViews;
+    private PickerView[] mItemViews;
     private int[] mTranslateOffset;
 
     private PickerStatus mCurrentState;
@@ -59,15 +57,15 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
 
     private boolean isAnimation = false;
 
-    public SpringPickerView(Context context) {
+    public SpringPickerViewExpand(Context context) {
         this(context, null);
     }
 
-    public SpringPickerView(Context context, AttributeSet attrs) {
+    public SpringPickerViewExpand(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public SpringPickerView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SpringPickerViewExpand(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.mContext = context;
 
@@ -94,18 +92,18 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
     }
 
     private void initView() {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.layout_spring_picker, this, true);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.layout_spring_picker_expand, this, true);
         rlRoot = (RelativeLayout) view.findViewById(R.id.rl_root);
         pbPicker = (RoundProgressBar) view.findViewById(R.id.pb_level);
         ivCover = (ImageView) view.findViewById(R.id.iv_cover);
 
-        mItemViews = new Button[itemCount];
+        mItemViews = new PickerView[itemCount];
         mTranslateOffset = new int[itemCount];
         mIsScaled = new boolean[itemCount];
-        mItemViews[0] = (Button) view.findViewById(R.id.btn_level_zero);
-        mItemViews[1] = (Button) view.findViewById(R.id.btn_level_one);
-        mItemViews[2] = (Button) view.findViewById(R.id.btn_level_two);
-        mItemViews[3] = (Button) view.findViewById(R.id.btn_level_three);
+        mItemViews[0] = (PickerView) view.findViewById(R.id.btn_level_zero);
+        mItemViews[1] = (PickerView) view.findViewById(R.id.btn_level_one);
+        mItemViews[2] = (PickerView) view.findViewById(R.id.btn_level_two);
+        mItemViews[3] = (PickerView) view.findViewById(R.id.btn_level_three);
 
         pbPicker.setOnClickListener(new OnClickListener() {
 
@@ -151,8 +149,9 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
             mTranslateOffset[i] = (pickerWidth + pickerGap) * (i + 1) - pickerWidth;
         }
         setPickerGone();
+        // 更新各个level控件的样式
+        updateLevelStatus();
         setPickerSelected(mCurrentProcess);
-        updateProgressStatus();
     }
 
     public PickerStatus getCurrentStatus(){
@@ -195,11 +194,9 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
         }
         for (int i = 0; i < itemCount; i++) {
             if (i == index) {
-                mItemViews[i].setTextColor(mContext.getResources().getColor(R.color.spring_picker_text_select));
-                mItemViews[i].setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.bkg_circle_shape_spring_picker_pressed));
+                mItemViews[i].setStyleType(1);
             } else {
-                mItemViews[i].setTextColor(mContext.getResources().getColor(R.color.spring_picker_text_normal));
-                mItemViews[i].setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.bkg_circle_shape_spring_picker_normal));
+                mItemViews[i].setStyleType(0);
             }
         }
     }
@@ -242,6 +239,7 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
         startPickerAnimation(growthView, recoverView);
         pbPicker.setProgress(mCurrentProcess * RECOVER_STEP);
         setPickerSelected(mCurrentProcess);
+        mCurrentLevel = PickerLevel.fromInt(mCurrentProcess);
         if (mOnLevelPickedListener != null && isTriggerLevelChanged) {
             mOnLevelPickedListener.onLevelPicked(mCurrentLevel);
         }
@@ -255,7 +253,7 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
     /**
      * level选择，考虑currentProgress和preProgress
      */
-    private void updateProgressStatus() {
+    private void updateLevelStatus() {
         View growthView = null;
         View recoverView = null;
         mPreProcess = -1;
@@ -286,23 +284,13 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
      * @param recoverView
      */
     private void startPickerAnimation(View growthView, View recoverView) {
-        //组合动画方式
-        AnimatorSet set = new AnimatorSet();
-        // picker animation growth
-        if (growthView != null) {
-            ObjectAnimator growthAnimatorX = ObjectAnimator.ofFloat(growthView, "scaleX", 1.0f, 1.3f);
-            ObjectAnimator growthAnimatorY = ObjectAnimator.ofFloat(growthView, "scaleY", 1.0f, 1.3f);
-            growthAnimatorX.setInterpolator(new AccelerateDecelerateInterpolator());
-            growthAnimatorY.setInterpolator(new AccelerateDecelerateInterpolator());
-            if (recoverView != null) {
-                // picker animation recover
-                ObjectAnimator recoverAnimatorX = ObjectAnimator.ofFloat(recoverView, "scaleX", 1.3f, 1.0f);
-                ObjectAnimator recoverAnimatorY = ObjectAnimator.ofFloat(recoverView, "scaleY", 1.3f, 1.0f);
-                set.play(growthAnimatorX).with(growthAnimatorY).with(recoverAnimatorX).with(recoverAnimatorY);
-            } else {
-                set.play(growthAnimatorX).with(growthAnimatorY);
-            }
-            set.setDuration(PICKER_ANIMATION_DURATION).start();
+        if(growthView != null){
+            // 被选中的动画要扩大
+            ((PickerView)growthView).doDilate();
+        }
+        if(recoverView != null){
+            // 之前选中的要还原
+            ((PickerView)recoverView).setStyleType(0);
         }
     }
 
@@ -398,43 +386,27 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
     @Override
     public void onClick(View v) {
         mPreProcess = mCurrentProcess;
-//        if (v == mItemViews[0]) {
-//            mCurrentLevel = PickerLevel.LEVEL_ZERO;
-//            mCurrentProcess = 0;
-//        } else if (v == mItemViews[1]) {
-//            mCurrentLevel = PickerLevel.LEVEL_ONE;
-//            mCurrentProcess = 1;
-//        } else if (v == mItemViews[2]) {
-//            mCurrentLevel = PickerLevel.LEVEL_TWO;
-//            mCurrentProcess = 2;
-//        } else if (v == mItemViews[3]) {
-//            mCurrentLevel = PickerLevel.LEVEL_THREE;
-//            mCurrentProcess = 3;
-//        }
         if (v.getId() == R.id.btn_level_zero) {
-            mCurrentLevel = PickerLevel.LEVEL_ZERO;
             mCurrentProcess = 0;
         } else if (v.getId() == R.id.btn_level_one) {
-            mCurrentLevel = PickerLevel.LEVEL_ONE;
             mCurrentProcess = 1;
         } else if (v.getId() == R.id.btn_level_two) {
-            mCurrentLevel = PickerLevel.LEVEL_TWO;
             mCurrentProcess = 2;
         } else if (v.getId() == R.id.btn_level_three) {
-            mCurrentLevel = PickerLevel.LEVEL_THREE;
             mCurrentProcess = 3;
         }
         // 重复选择，不处理
         if (mCurrentProcess == mPreProcess) {
             return;
         }
+        mCurrentLevel = PickerLevel.fromInt(mCurrentProcess);
         // update picker status
         if (mOnLevelPickedListener != null) {
             mOnLevelPickedListener.onLevelPicked(mCurrentLevel);
         }
+        // update progress status, Picker的限制，必须采用这个顺序
+        updateLevelStatus();
         setPickerSelected(mCurrentProcess);
-        // update progress status
-        updateProgressStatus();
     }
 
     public enum PickerStatus {
@@ -473,6 +445,20 @@ public class SpringPickerView extends RelativeLayout implements View.OnClickList
 
         PickerLevel(int i) {
             this.asInt = i;
+        }
+
+        static PickerLevel fromInt(int i) {
+            switch (i) {
+                case 1:
+                    return LEVEL_ONE;
+                case 2:
+                    return LEVEL_TWO;
+                case 3:
+                    return LEVEL_THREE;
+                default:
+                case 0:
+                    return LEVEL_ZERO;
+            }
         }
     }
 

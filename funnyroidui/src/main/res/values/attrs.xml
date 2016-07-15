@@ -1,20 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <declare-styleable name="RoundProgressBar">
-        <attr name="roundColor" format="color"/>
-        <attr name="roundProgressColor" format="color"/>
-        <attr name="roundWidth" format="dimension|reference"></attr>
-        <attr name="roundProgressWidth" format="dimension|reference"></attr>
+        <attr name="roundColor" format="color|reference"/>
+        <attr name="roundProgressColor" format="color|reference"/>
+        <attr name="roundWidth" format="dimension|reference"/>
+        <attr name="roundProgressWidth" format="dimension|reference"/>
         <attr name="circleSize" format="dimension|reference"/>
         <attr name="textSize" format="dimension|reference"/>
-        <attr name="textColor" format="color"/>
-        <attr name="max" format="integer"></attr>
-        <attr name="textIsDisplayable" format="boolean"></attr>
+        <attr name="textColor" format="color|reference"/>
+        <attr name="max" format="integer"/>
+        <attr name="textIsDisplayable" format="boolean"/>
         <attr name="style">
-            <enum name="STROKE" value="0"></enum>
-            <enum name="FILL" value="1"></enum>
+            <enum name="STROKE" value="0"/>
+            <enum name="FILL" value="1"/>
         </attr>
     </declare-styleable>
+
+
+    <declare-styleable name="PickerView">
+        <attr name="normalColor" format="color|reference"/>
+        <attr name="selectedColor" format="color|reference"/>
+        <attr name="numberText" format="string|reference"/>
+        <attr name="numberTextSize" format="dimension|reference"/>
+        <attr name="textNormalColor" format="color|reference"/>
+        <attr name="textSelectedColor" format="color|reference"/>
+        <attr name="radiusMin" format="dimension|reference"/>
+        <attr name="radiusMax" format="dimension|reference"/>
+        <attr name="maxSize" format="dimension|reference"/>
+    </declare-styleable>
+
 
     <declare-styleable name="SpringPicker">
         <attr name="maxWidth" format="dimension|reference"/>

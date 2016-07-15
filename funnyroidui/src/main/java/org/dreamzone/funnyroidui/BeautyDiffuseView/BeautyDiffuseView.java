@@ -1,4 +1,4 @@
-package org.dreamzone.funnyroidui.BeautyDiffuseView;
+package org.dreamzone.funnyroidui.beautydiffuseview;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

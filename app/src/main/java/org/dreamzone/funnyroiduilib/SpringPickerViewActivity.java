@@ -22,7 +22,6 @@ public class SpringPickerViewActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spring_picker);
         springPickerView = (SpringPickerView) findViewById(R.id.sp_picker);
-
         springPickerView.setOnLevelPickedListener(new SpringPickerView.OnLevelPickedListener() {
             @Override
             public void onLevelPicked(SpringPickerView.PickerLevel pickerLevel) {

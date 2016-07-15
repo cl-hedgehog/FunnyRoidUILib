@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:background="@color/trans_black_80"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <org.dreamzone.funnyroidui.springpicker.SpringPickerViewExpand
+            android:id="@+id/sp_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            app:maxWidth="250dp"
+            app:minWidth="80dp"
+            app:pickerWidth="37dp"
+            app:pickerGap="6dp"/>
+
+        <ImageView
+            android:id="@+id/iv_img_one"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/img_ad_failed"/>
+
+        <ImageView
+            android:id="@+id/iv_img_two"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/img_welcome"/>
+    </LinearLayout>
+
+    <org.dreamzone.funnyroidui.springpicker.PickerView
+        android:id="@+id/picker_view"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_margin="10dp"
+        app:maxSize="37dp"
+        app:normalColor="@color/spring_picker_bkg_normal"
+        app:numberText="2"
+        app:numberTextSize="14dp"
+        app:radiusMax="17dp"
+        app:radiusMin="13dp"
+        app:selectedColor="@color/spring_picker_bkg_select"
+        app:textNormalColor="@color/spring_picker_text_normal"
+        app:textSelectedColor="@color/spring_picker_text_select"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_dilate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="dilate"/>
+
+        <Button
+            android:id="@+id/btn_shink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="shrink"/>
+    </LinearLayout>
+</LinearLayout>
