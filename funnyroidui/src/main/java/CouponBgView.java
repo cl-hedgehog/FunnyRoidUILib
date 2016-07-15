@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 /**
  * @author bohe
  * @ClassName: CouponBgView
- * @Description:
+ * @Description: todo
  * @date 2016/7/11 10:46
  */
 public class CouponBgView extends LinearLayout{
