@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 
-import org.dreamzone.funnyroidui.beautydiffuseview.BeautyDiffuseView;
+import org.dreamzone.funnyroidui.BeautyDiffuseView;
 
 
 public class BeautyDiffuseActivity extends FragmentActivity {

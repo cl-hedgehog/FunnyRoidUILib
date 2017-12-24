@@ -10,12 +10,12 @@
     <ImageView
         android:id="@+id/iv_img"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="match_parent"
         android:scaleType="fitXY"
         android:src="@drawable/img_ad_failed"
         android:visibility="visible"/>
 
-    <org.dreamzone.funnyroidui.beautydiffuseview.BeautyDiffuseView
+    <org.dreamzone.funnyroidui.BeautyDiffuseView
         android:id="@+id/view_diffuse"
         android:layout_width="match_parent"
         android:layout_height="400dp"/>
